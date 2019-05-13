@@ -1,0 +1,17 @@
+{
+	"author": "Oleg Iaremchuk",
+	"classifications": ["Web", "Api"],
+	"name": "Martelskiy.Api.Template",
+	"identity": "Martelskiy.Api.Template",
+	"shortName": "martelskiy.api",
+	"tags": {
+		"language": "C#"
+	},
+	"sourceName": "Martelskiy.Api.Template",
+	"preferNameDirectory": "true",
+	"sources": [{
+      "modifiers": [{
+	    "exclude": ["logs/**",".vs/**", "src/logs/**", "src/.vs/**"]
+	  }]
+   }]
+}
