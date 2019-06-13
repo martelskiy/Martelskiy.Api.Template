@@ -15,5 +15,19 @@ Assuming that you are standing in c:\temp
 
 ### Locked dotnet core version - ``global.json``
 
-We are using global.json to lockdown which version of the dotnet core runtime that our app are using.
-We are currently using version **2.2.2**.
+## Template frameworks:
+
+1. [``Serilog``](https://serilog.net/)
+2. [``Swagger``](https://github.com/domaindrivendev/Swashbuckle.AspNetCore)
+3. [``Cake build``](https://cakebuild.net/)
+
+## Configuration description:
+
+1. Custom error handling middleware
+2. Health checks
+3. Correlation ID configuration
+4. Environment set up
+5. Log into Elastic (default host address ``localhost:9200``)
+6. Encapsulated Newtonsoft serializer
+7. Basic Docker file added
+8. Basic Cake build configuration

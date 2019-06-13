@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+using Martelskiy.Api.Template.Features.Shared;
+using Martelskiy.Api.Template.Features.Shared.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace Martelskiy.Api.Template
 {
@@ -14,11 +13,38 @@ namespace Martelskiy.Api.Template
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var webHostBuilder = CreateWebHostBuilder(args);
+            var webHost = webHostBuilder.Build();
+
+            var configurators = webHost.Services.GetRequiredService<IEnumerable<IConfigurator>>();
+
+            foreach (var configurator in configurators)
+            {
+                configurator.Configure();
+            }
+
+            var hostingEnvironment = webHost.Services.GetRequiredService<IHostingEnvironment>();
+
+            Log.Logger.Information($"Starting application. Environment: {hostingEnvironment.EnvironmentName}");
+
+            webHost.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+                    config
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                        .AddEnvironmentVariables();
+                })
+                .UseLogging()
                 .UseStartup<Startup>();
+        }
     }
 }
