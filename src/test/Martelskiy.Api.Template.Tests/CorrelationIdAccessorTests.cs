@@ -53,41 +53,12 @@ namespace Martelskiy.Api.Template.Tests
         }
 
         [Fact]
-        public void GivenXRequestIdHeader_WhenGetCorrelationId_ThenReturnsXRequestIdHeaderValueAsCorrelationId()
-        {
-            var correlationId = "406B9CA7-A8DA-4EC1-8432-85EE3C794B02";
-            _httpContextAccessor.HttpContext.Request.Headers.Returns(new HeaderDictionary
-            {
-                {"X-Request-ID", correlationId}
-            });
-
-            var result = _sut.GetCorrelationId();
-
-            result.ShouldBe(correlationId);
-        }
-
-        [Fact]
         public void GivenXCorrelationIdHeader_WhenGetCorrelationId_ThenReturnsXCorrelationIdHeaderValueAsCorrelationId()
         {
             var correlationId = "406B9CA7-A8DA-4EC1-8432-85EE3C794B02";
             _httpContextAccessor.HttpContext.Request.Headers.Returns(new HeaderDictionary
             {
                 {"X-Correlation-ID", correlationId}
-            });
-
-            var result = _sut.GetCorrelationId();
-
-            result.ShouldBe(correlationId);
-        }
-
-        [Fact]
-        public void GivenBothXRequestIdAndXCorrelationIdHeader_WhenGetCorrelationId_ThenReturnsCorrelationIdFromXRequestId()
-        {
-            var correlationId = "406B9CA7-A8DA-4EC1-8432-85EE3C794B02";
-            _httpContextAccessor.HttpContext.Request.Headers.Returns(new HeaderDictionary
-            {
-                {"X-Request-ID", correlationId},
-                {"X-Correlation-ID", "something-else"},
             });
 
             var result = _sut.GetCorrelationId();

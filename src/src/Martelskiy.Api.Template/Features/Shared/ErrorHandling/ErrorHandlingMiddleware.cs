@@ -2,7 +2,6 @@
 using System.Net;
 using System.Threading.Tasks;
 using Martelskiy.Api.Template.Features.Shared.ErrorHandling.ProblemDetails.Responses;
-using Martelskiy.Api.Template.Features.Shared.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -31,7 +30,7 @@ namespace Martelskiy.Api.Template.Features.Shared.ErrorHandling
 
                 context.Response.StatusCode = statusCode;
                 context.Response.ContentType = ContentType.ProblemDetails;
-                _logger.LogError(eventId: ApplicationEventId.UnhandledError, exception: exception, message: errorMessage);
+                _logger.LogError(exception: exception, message: errorMessage);
 
                 var problemDetails = new InternalServerErrorProblemDetails(context.TraceIdentifier);
 

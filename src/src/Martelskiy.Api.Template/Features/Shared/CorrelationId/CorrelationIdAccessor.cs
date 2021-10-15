@@ -11,7 +11,7 @@ namespace Martelskiy.Api.Template.Features.Shared.CorrelationId
 
         public CorrelationIdAccessor(IHttpContextAccessor httpContextAccessor)
         {
-            _correlationHeaderNames = new List<string> { "X-Request-ID", "X-Correlation-ID" };
+            _correlationHeaderNames = new List<string> { "X-Correlation-ID" };
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 

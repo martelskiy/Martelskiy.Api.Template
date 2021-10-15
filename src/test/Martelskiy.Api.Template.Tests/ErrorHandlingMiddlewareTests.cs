@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Martelskiy.Api.Template.Features.Shared.ErrorHandling;
-using Martelskiy.Api.Template.Features.Shared.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -50,9 +49,9 @@ namespace Martelskiy.Api.Template.Tests
 
             await _sut.InvokeAsync(httpContext, context => throw exception);
 
-            // Note, we cant use .Received here because the logging framework are doing some magic behind the scenes.
-            // So our parameters to LogError here is useless. The test is still useful however since we are assuring that we are logging the error.
-            _logger.ReceivedWithAnyArgs(1).LogError(ApplicationEventId.UnhandledError, exception, message: "Unhandled exception occured");
+            _logger
+                .ReceivedWithAnyArgs(1)
+                .LogError(exception, message: "Unhandled exception occured");
         }
 
         [Fact]

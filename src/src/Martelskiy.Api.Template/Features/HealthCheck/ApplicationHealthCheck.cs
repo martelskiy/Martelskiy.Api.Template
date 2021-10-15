@@ -6,7 +6,7 @@ namespace Martelskiy.Api.Template.Features.HealthCheck
 {
     public class ApplicationHealthCheck : IHealthCheck
     {
-        public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
+        public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new ())
         {
             return Task.FromResult(HealthCheckResult.Healthy());
         }
