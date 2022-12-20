@@ -25,8 +25,7 @@ namespace Martelskiy.Api.Template
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
